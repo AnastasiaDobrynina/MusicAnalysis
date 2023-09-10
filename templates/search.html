@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Поиск</h1>
+<p id="black"><b> {{ warning }} </b></p>
+<p id = 'black'> Введите название испольнителя, творчесво которого хотите проанализировать</p>
+<p id = 'black'> Пишите название как можно точнее, без сокращений </p>
+
+<form action="/res" method="get">
+<div style = 'position: relative;
+    margin-bottom: 20px;
+    width: 520px;
+    height: 45px;
+    left: 250px;
+    top: 260px;
+    background: #FBE0D9;
+    box-shadow: 4px 4px 35px #E3E3E3;
+    border-radius: 10px;'>
+	<p style = ' position: relative; top: 7px; left: 5'><input type="text" name="q" placeholder="Поиск по сайту">
+   <input type="submit" value="Найти"></p>
+    </div>
+</form>
+
+{% endblock %}

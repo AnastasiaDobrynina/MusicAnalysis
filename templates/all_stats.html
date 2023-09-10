@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Статистика</h1>
+<p id="txt">Этот раздел отражает семантичекую близость текстов всех групп, которые были проанализированы на сайте</p>
+
+
+<div style = 'position: relative;
+float: left;
+    margin: 60px;
+    width: 1000px;
+    height: 500px;
+    left: 20px;
+    top: 300px;'>
+
+        <canvas id="myChart"></canvas>
+    </div>
+
+<script>
+
+        const labels = {{ labels | tojson}};
+
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'Исполнитель',
+                backgroundColor: 'rgb(235,182,176,0.7)',
+                borderColor: 'rgb(235,182,176,1)',
+                radius: 6,
+                data: {{ data | tojson}},
+            }]
+        };
+
+        const config = {
+            type: 'scatter',
+            data: data,
+
+            options: { maintainAspectRatio: false }
+
+        };
+
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+
+    </script>
+
+{% endblock %}

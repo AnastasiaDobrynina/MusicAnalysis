@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+<h1>Статистика</h1>
+
+<p id="black"> {{ wiki }} </p>
+<p id = 'txt'> Леммы — слова в начальной форме. Их количество отражает "словарный запас" исполнителя </p>
+
+<div style = 'position: relative;
+    float: left;
+    margin: 10px;
+    width: 440px;
+    height: 100px;
+    left: 20px;
+    top: 260px;
+    background: #ECB7B3;
+    box-shadow: 4px 4px 35px #E3E3E3;
+    border-radius: 10px;'>
+    <p id = 'white'> Группа: <b>{{ arg['q'] }}</b></p>
+</div>
+<div style = 'position: relative;
+    float: left;
+    margin: 10px;
+    width: 440px;
+    height: 100px;
+    left: 20px;
+    top: 260px;
+    background: #A4B8AC;
+    box-shadow: 4px 4px 35px #E3E3E3;
+    border-radius: 10px;'>
+    <p id = 'white'> Всего слов: <b>{{ overall }}</b></p>
+</div>
+<div style = 'position: relative;
+    float: left;
+    margin: 10px;
+    width: 440px;
+    height: 100px;
+    left: 20px;
+    top: 260px;
+    background: #ECB7B3;
+    box-shadow: 4px 4px 35px #E3E3E3;
+    border-radius: 10px;'>
+    <p id = 'white'> Леммы: <b>{{ wordcount }}</b></p>
+</div>
+<div style = 'position: relative;
+float: left;
+    margin: 60px;
+    width: 1000px;
+    height: 500px;
+    left: 20px;
+    top: 260px;'>
+    <p><b>Семантическая близость песен</b></p>
+    <p>Этот график отражает то, насколько песни похожи по смыслу. Чем ближе точки, тем больше композиции схожи</p>
+
+        <canvas id="myChart"></canvas>
+    </div>
+<div style = 'position: relative;
+    float: left;
+    margin: 10px;
+    width: 70%;
+    height: 30px;
+    left: 20px;
+    top: 90px;'>
+<p id = 'txt'>Ключевые — слова самые важные по смыслу. Это не то же самое, что просто самые частые слова</p>
+</div>
+<div style = 'position: relative;
+    float: left;
+    margin: 10px;
+    width: 440px;
+    height: 600px;
+    left: 20px;
+    top: 370px;
+    background: #A4B8AC;
+    box-shadow: 4px 4px 35px #E3E3E3;
+    border-radius: 10px;'>
+    <p id = 'white'> Ключевые слова:</p>
+    <ol>
+    {% for i in key_words %}
+        <li class="li"> {{ i }} </li>
+    {% endfor %}
+    </ol>
+</div>
+<div style = 'position: relative;
+    float: left;
+    margin: 10px;
+    width: 440px;
+    height: 600px;
+    left: 20px;
+    top: 370px;
+    background: #ECB7B3;
+    box-shadow: 4px 4px 35px #E3E3E3;
+    border-radius: 10px;'>
+    <p id = 'white'> Самые частые слова:</p>
+    <ol>
+    {% for word in freq_words %}
+        <li class="li"> {{ word[0] }}  — <b>{{ word[1] }}</b> </li>
+    {% endfor %}
+    </ol>
+</div>
+<div style = 'position: relative;
+    float: left;
+    margin: 10px;
+    width: 440px;
+    height: 600px;
+    left: 20px;
+    top: 370px;
+    background: #A4B8AC;
+    box-shadow: 4px 4px 35px #E3E3E3;
+    border-radius: 10px;'>
+    <p id = 'white'> Распределение по частям речи:</p>
+        <li class="li"> Глаголы  — <b>{{ verbs }}</b> </li>
+        <li class="li"> Существительные  — <b>{{ nouns }} </b></li>
+        <li class="li"> Прилагательные  — <b>{{ adjectives }} </b></li>
+        <li class="li"> Наречия  — <b>{{ adverbs }}</b> </li>
+        <li class="li"> Имена собственные  — <b>{{ propernouns }} </b></li>
+
+</div>
+
+<script>
+
+        const labels = {{ labels | tojson}};
+
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'Песня',
+                backgroundColor: 'rgb(235,182,176,0.7)',
+                borderColor: 'rgb(235,182,176,1)',
+                radius: 6,
+                data: {{ data | tojson}},
+            }]
+        };
+
+        const config = {
+            type: 'bubble',
+            data: data,
+            options: { maintainAspectRatio: false }
+        };
+
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+
+    </script>
+
+{% endblock %}
